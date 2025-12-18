@@ -17,6 +17,7 @@ const CONFIG = {
     },
 
     // Language Configuration
+    // Language Configuration
     LANGUAGE: {
         code: 'en',
         name: 'English'
