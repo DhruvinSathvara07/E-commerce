@@ -1,5 +1,70 @@
 'use strict';
 
+/**
+ * localStorage Helper Functions
+ */
+
+/**
+ * Get item from localStorage
+ * @param {string} key - The key to retrieve
+ * @returns {any|null} - The parsed value or null if not found
+ */
+function getItem(key) {
+  try {
+    const item = localStorage.getItem(key);
+    return item ? JSON.parse(item) : null;
+  } catch (error) {
+    console.error(`Error getting item from localStorage: ${error}`);
+    return null;
+  }
+}
+
+/**
+ * Set item in localStorage
+ * @param {string} key - The key to store
+ * @param {any} value - The value to store (will be stringified)
+ */
+function setItem(key, value) {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch (error) {
+    console.error(`Error setting item in localStorage: ${error}`);
+  }
+}
+
+/**
+ * Load products from API and store in localStorage
+ */
+function loadProducts() {
+  fetch(CONFIG.API.URL)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      setItem('apiProducts', data);
+      console.log('Products loaded and stored in localStorage');
+    })
+    .catch(error => {
+      console.error('Error loading products:', error);
+    });
+}
+
+// Load products on page load
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', function () {
+    loadProducts();
+    // Initialize authentication system
+    initAuth();
+  });
+} else {
+  loadProducts();
+  // Initialize authentication system
+  initAuth();
+}
+
 // modal variables
 const modal = document.querySelector('[data-modal]');
 const modalCloseBtn = document.querySelector('[data-modal-close]');
