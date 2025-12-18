@@ -77,6 +77,12 @@
   #RESET
 \*-----------------------------------*/
 
+
+h1{
+  color: black !important;
+}
+
+
 *, *::before, *::after {
   margin: 0;
   padding: 0;
