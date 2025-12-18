@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProGear - Gaming Equipment Store</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #6c5ce7;
+            --secondary-color: #00b894;
+            --danger-color: #d63031;
+            --bg-color: #ffffff;
+            --text-color: #2d3436;
+            --card-bg: #f8f9fa;
+            --border-color: #dfe6e9;
+        }
+
+        body.dark-mode {
+            --bg-color: #1a1a1a;
+            --text-color: #ffffff;
+            --card-bg: #2d2d2d;
+            --border-color: #444444;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: var(--card-bg);
+            border-bottom: 2px solid var(--border-color);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        nav {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .search-bar input {
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-width: 200px;
+        }
+
+        button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .theme-toggle, .lang-toggle {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            font-size: 1.2rem;
+        }
+
+        .icon-btn {
+            background: var(--primary-color);
+            color: white;
+            position: relative;
+        }
+
+        .icon-btn span {
+            background: var(--danger-color);
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 0.7rem;
+            position: absolute;
+            top: -5px;
+            right: -5px;
+        }
+
+        .login-btn {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .page {
+            display: none;
+            padding: 2rem 0;
+            min-height: 60vh;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 4rem 2rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .hero-banner h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-btn {
+            background: white;
+            color: var(--primary-color);
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            margin-top: 1rem;
+        }
+
+        .category-grid, .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+            justify-items: center;
+        }
+
+        .category-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid var(--border-color);
+            width: 100%;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Flip Card Styles */
+        .flip-card {
+            background-color: transparent;
+            width: 250px;
+            height: 350px;
+            perspective: 1000px;
+            font-family: sans-serif;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        /* Prevent flip animation from interfering with button clicks */
+        .flip-card-back {
+            pointer-events: none;
+        }
+
+        .flip-card:hover .flip-card-back {
+            pointer-events: auto;
+        }
+
+        .flip-card-front, .flip-card-back {
+            box-shadow: 0 8px 14px 0 rgba(0,0,0,0.2);
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border: 1px solid coral;
+            border-radius: 1rem;
+            padding: 1rem;
+        }
+
+        .flip-card-front {
+            background: linear-gradient(120deg, bisque 60%, rgb(255, 231, 222) 88%,
+                rgb(255, 211, 195) 40%, rgba(255, 127, 80, 0.603) 48%);
+            color: coral;
+        }
+
+        body.dark-mode .flip-card-front {
+            background: linear-gradient(120deg, #2d2d2d 60%, #3d3d3d 88%,
+                #4d4d4d 40%, rgba(108, 92, 231, 0.3) 48%);
+            border-color: var(--primary-color);
+        }
+
+        .flip-card-back {
+            background: linear-gradient(120deg, rgb(255, 174, 145) 30%, coral 88%,
+                bisque 40%, rgb(255, 185, 160) 78%);
+            color: white;
+            transform: rotateY(180deg);
+            padding: 1.5rem;
+        }
+
+        body.dark-mode .flip-card-back {
+            background: linear-gradient(120deg, var(--primary-color) 30%, #764ba2 88%,
+                #667eea 40%, var(--secondary-color) 78%);
+            border-color: var(--primary-color);
+        }
+
+        .product-image {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            margin: 1rem 0;
+        }
+
+        .product-front-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .product-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .product-brand {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .product-price {
+            color: #ff6b6b;
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+
+        .product-price.sale {
+            color: #d63031;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #999;
+            margin-left: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .product-rating {
+            margin: 0.3rem 0;
+            font-size: 0.9rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.3rem 0.6rem;
+            border-radius: 5px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin: 0.2rem;
+        }
+
+        .badge.sale {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .badge.new {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .badge.pro {
+            background: #fdcb6e;
+            color: #2d3436;
+        }
+
+        .product-back-content {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: space-between;
+        }
+
+        .product-description {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            text-align: left;
+            font-size: 0.9rem;
+            margin: 1rem 0;
+        }
+
+        .product-description p {
+            margin: 0.3rem 0;
+        }
+
+        .product-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: auto;
+        }
+
+        .product-actions button {
+            width: 100%;
+            padding: 0.7rem;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .add-to-cart {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .add-to-cart:hover {
+            background: #5a4cd6;
+        }
+
+        .add-to-wishlist {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .add-to-wishlist:hover {
+            background: #c92a2a;
+        }
+
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filters select, .filters label {
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            background: var(--card-bg);
+            color: var(--text-color);
+        }
+
+        .auth-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 10px;
+        }
+
+        .auth-container form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .auth-container input {
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .auth-container button {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--card-bg);
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            align-items: center;
+        }
+
+        .cart-item-image {
+            font-size: 3rem;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            align-items: center;
+        }
+
+        .cart-item-actions button {
+            padding: 0.3rem 0.8rem;
+        }
+
+        .cart-total {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .checkout-btn, .place-order-btn {
+            background: var(--secondary-color);
+            color: white;
+            width: 100%;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .order-summary {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 0.5rem 0;
+        }
+
+        .order-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .order-status {
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        footer {
+            background: var(--card-bg);
+            border-top: 2px solid var(--border-color);
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .footer-section a {
+            display: block;
+            color: var(--text-color);
+            text-decoration: none;
+            margin: 0.5rem 0;
+            cursor: pointer;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary-color);
+        }
+
+        .sale-banner {
+            background: linear-gradient(135deg, #fd79a8, #a29bfe);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .admin-actions button {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 2rem;
+        }
+
+        .product-management-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--card-bg);
+            margin-bottom: 1rem;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            header .container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero-banner h1 {
+                font-size: 2rem;
+            }
+
+            .search-bar input {
+                min-width: 150px;
+            }
+
+            .cart-item {
+                flex-direction: column;
+            }
+
+            .flip-card {
+                width: 220px;
+                height: 320px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">ProGear</div>
+            <nav>
+                <a onclick="showPage('home')">Home</a>
+                <a onclick="showPage('products')">Products</a>
+                <a onclick="showPage('newProducts')">New Arrivals</a>
+                <a onclick="showPage('sale')">Sale</a>
+            </nav>
+            <div class="header-actions">
+                <button onclick="toggleTheme()" class="theme-toggle">🌙</button>
+                <button onclick="toggleLanguage()" class="lang-toggle" id="langBtn">MN</button>
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Search products...">
+                    <button onclick="searchProducts()">🔍</button>
+                </div>
+                <button onclick="showPage('wishlist')" class="icon-btn">❤️ <span id="wishlistCount">0</span></button>
+                <button onclick="showPage('cart')" class="icon-btn">🛒 <span id="cartCount">0</span></button>
+                <button onclick="showPage('login')" id="loginBtn" class="login-btn">Login</button>
+                <button onclick="logout()" id="logoutBtn" class="login-btn" style="display:none;">Logout</button>
+                <button onclick="showPage('admin')" id="adminBtn" class="login-btn" style="display:none;">Admin</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Home Page -->
+        <div id="homePage" class="page active">
+            <div class="hero-banner">
+                <h1>Winter Sale - Up to 50% Off!</h1>
+                <p>Get the best gaming gear at unbeatable prices</p>
+                <button onclick="showPage('sale')" class="cta-btn">Shop Now</button>
+            </div>
+            
+            <section class="categories">
+                <h2>Shop by Category</h2>
+                <div class="category-grid">
+                    <div class="category-card" onclick="filterByCategory('mouse')">
+                        <h3>🖱️ Mouse</h3>
+                    </div>
+                    <div class="category-card" onclick="filterByCategory('keyboard')">
+                        <h3>⌨️ Keyboard</h3>
+                    </div>
+                    <div class="category-card" onclick="filterByCategory('headset')">
+                        <h3>🎧 Headset</h3>
+                    </div>
+                    <div class="category-card" onclick="filterByCategory('pad')">
+                        <h3>🎯 Mouse Pad</h3>
+                    </div>
+                </div>
+            </section>
+
+            <section class="featured-products">
+                <h2>Top Rated Products</h2>
+                <div id="topRatedProducts" class="product-grid"></div>
+            </section>
+        </div>
+
+        <!-- Products Page -->
+        <div id="productsPage" class="page">
+            <h2>All Products</h2>
+            <div class="filters">
+                <select id="categoryFilter" onchange="applyFilters()">
+                    <option value="">All Categories</option>
+                    <option value="mouse">Mouse</option>
+                    <option value="keyboard">Keyboard</option>
+                    <option value="headset">Headset</option>
+                    <option value="pad">Mouse Pad</option>
+                    <option value="keycaps">Keycaps</option>
+                </select>
+                <select id="brandFilter" onchange="applyFilters()">
+                    <option value="">All Brands</option>
+                    <option value="Logitech">Logitech</option>
+                    <option value="Razer">Razer</option>
+                    <option value="SteelSeries">SteelSeries</option>
+                    <option value="Corsair">Corsair</option>
+                </select>
+                <label>
+                    <input type="checkbox" id="proPlayerFilter" onchange="applyFilters()">
+                    Pro Player Gear
+                </label>
+            </div>
+            <div id="productList" class="product-grid"></div>
+        </div>
+
+        <!-- New Products Page -->
+        <div id="newProductsPage" class="page">
+            <h2>New Arrivals</h2>
+            <div id="newProductList" class="product-grid"></div>
+        </div>
+
+        <!-- Sale Page -->
+        <div id="salePage" class="page">
+            <div class="sale-banner">
+                <h1>🔥 Winter Sale 🔥</h1>
+                <p>Limited time offer - Don't miss out!</p>
+            </div>
+            <div id="saleProductList" class="product-grid"></div>
+        </div>
+
+        <!-- Cart Page -->
+        <div id="cartPage" class="page">
+            <h2>Shopping Cart</h2>
+            <div id="cartItems"></div>
+            <div id="cartTotal" class="cart-total"></div>
+            <button onclick="showPage('checkout')" class="checkout-btn" id="checkoutBtn" style="display:none;">Proceed to Checkout</button>
+        </div>
+
+        <!-- Checkout Page -->
+        <div id="checkoutPage" class="page">
+            <h2>Checkout</h2>
+            <form id="checkoutForm" onsubmit="placeOrder(event)">
+                <div class="form-group">
+                    <label>Delivery Address</label>
+                    <textarea id="address" required rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Payment Method</label>
+                    <select id="paymentMethod" required>
+                        <option value="qpay">QPay</option>
+                        <option value="visa">Visa Card</option>
+                        <option value="paypal">PayPal</option>
+                    </select>
+                </div>
+                <div class="order-summary">
+                    <h3>Order Summary</h3>
+                    <div id="checkoutSummary"></div>
+                </div>
+                <button type="submit" class="place-order-btn">Place Order</button>
+            </form>
+        </div>
+
+        <!-- Wishlist Page -->
+        <div id="wishlistPage" class="page">
+            <h2>My Wishlist</h2>
+            <div id="wishlistItems" class="product-grid"></div>
+        </div>
+
+        <!-- Order History Page -->
+        <div id="orderHistoryPage" class="page">
+            <h2>Order History</h2>
+            <div id="orderList"></div>
+        </div>
+
+        <!-- Login Page -->
+        <div id="loginPage" class="page">
+            <div class="auth-container">
+                <h2>Login</h2>
+                <form id="loginForm" onsubmit="login(event)">
+                    <input type="email" id="loginEmail" placeholder="Email" required>
+                    <input type="password" id="loginPassword" placeholder="Password" required>
+                    <button type="submit">Login</button>
+                </form>
+                <p>Don't have an account? <a href="#" onclick="showPage('register')" style="color: var(--primary-color); cursor: pointer;">Register</a></p>
+                <p style="margin-top: 1rem; font-size: 0.9rem; color: #999;">Admin: admin@progear.mn / admin123</p>
+            </div>
+        </div>
+
+        <!-- Register Page -->
+        <div id="registerPage" class="page">
+            <div class="auth-container">
+                <h2>Register</h2>
+                <form id="registerForm" onsubmit="register(event)">
+                    <input type="text" id="regName" placeholder="Full Name" required>
+                    <input type="email" id="regEmail" placeholder="Email" required>
+                    <input type="password" id="regPassword" placeholder="Password" required>
+                    <button type="submit">Register</button>
+                </form>
+                <p>Already have an account? <a href="#" onclick="showPage('login')" style="color: var(--primary-color); cursor: pointer;">Login</a></p>
+            </div>
+        </div>
+
+        <!-- Admin Panel -->
+        <div id="adminPage" class="page">
+            <h2>Admin Panel</h2>
+            <div class="admin-actions">
+                <button onclick="showAddProductForm()">Add New Product</button>
+                <button onclick="showProductManagement()">Manage Products</button>
+            </div>
+            <div id="adminContent"></div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p>📞 +976 99119911</p>
+                    <p>📧 info@progear.mn</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <div class="social-links">
+                        <a>Facebook</a>
+                        <a>Instagram</a>
+                        <a>Telegram</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Policy</h3>
+                    <a onclick="showPolicy('return')">Return Policy</a>
+                    <a onclick="showPolicy('privacy')">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // API Configuration
+        // Choose one of these configurations:
+        
+        // For PHP backend (uncomment this line):
+        const API_URL = 'api.php';
+        
+        // For Node.js backend (uncomment this line instead):
+        // const API_URL = 'http://localhost:3000/api';
+        
+        // Initial Data
+        let products = [];
+        let cart = [];
+        let wishlist = [];
+        let orders = [];
+        let currentUser = null;
+        let isAdmin = false;
+        let language = 'en';
+
+        // API Helper Functions
+        async function apiCall(action, data = null, method = 'GET') {
+            try {
+                const options = {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                };
+                
+                if (data && method === 'POST') {
+                    options.body = JSON.stringify(data);
+                }
+                
+                const response = await fetch(`${API_URL}?action=${action}`, options);
+                return await response.json();
+            } catch (error) {
+                console.error('API Error:', error);
+                return { success: false, message: 'Network error' };
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadData();
+            await loadProducts();
+            displayProducts();
+            displayTopRated();
+            updateCounts();
+        });
+
+        async function loadData() {
+            // Load from localStorage for cart, wishlist, orders
+            const savedCart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const savedWishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+            const savedOrders = JSON.parse(localStorage.getItem('orders') || '[]');
+            const savedUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+            
+            cart = savedCart;
+            wishlist = savedWishlist;
+            orders = savedOrders;
+            currentUser = savedUser;
+            
+            if (currentUser) {
+                document.getElementById('loginBtn').style.display = 'none';
+                document.getElementById('logoutBtn').style.display = 'block';
+                isAdmin = currentUser.role === 'admin';
+                if (isAdmin) {
+                    document.getElementById('adminBtn').style.display = 'block';
+                }
+            }
+        }
+
+        async function loadProducts() {
+            const result = await apiCall('getProducts');
+            if (result.success) {
+                products = result.products;
+            }
+        }
+
+        function saveData() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+            localStorage.setItem('orders', JSON.stringify(orders));
+        }
+
+        function showPage(pageName) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageName + 'Page').classList.add('active');
+            
+            if (pageName === 'products') displayProducts();
+            if (pageName === 'newProducts') displayNewProducts();
+            if (pageName === 'sale') displaySaleProducts();
+            if (pageName === 'cart') displayCart();
+            if (pageName === 'wishlist') displayWishlist();
+            if (pageName === 'orderHistory') displayOrderHistory();
+            if (pageName === 'checkout') displayCheckout();
+        }
+
+        function displayProducts(filtered = null) {
+            const productsToShow = filtered || products;
+            const container = document.getElementById('productList');
+            if (productsToShow.length === 0) {
+                container.innerHTML = '<p>No products found</p>';
+            } else {
+                container.innerHTML = productsToShow.map(p => createProductCard(p)).join('');
+            }
+        }
+
+        function displayNewProducts() {
+            const newProducts = products.filter(p => p.new);
+            const container = document.getElementById('newProductList');
+            if (newProducts.length === 0) {
+                container.innerHTML = '<p>No new products yet</p>';
+            } else {
+                container.innerHTML = newProducts.map(p => createProductCard(p)).join('');
+            }
+        }
+
+        function displaySaleProducts() {
+            const saleProducts = products.filter(p => p.sale);
+            const container = document.getElementById('saleProductList');
+            if (saleProducts.length === 0) {
+                container.innerHTML = '<p>No sale products at the moment</p>';
+            } else {
+                container.innerHTML = saleProducts.map(p => createProductCard(p)).join('');
+            }
+        }
+
+        function displayTopRated() {
+            const topRated = [...products].sort((a, b) => b.rating - a.rating).slice(0, 4);
+            const container = document.getElementById('topRatedProducts');
+            container.innerHTML = topRated.map(p => createProductCard(p)).join('');
+        }
+
+        function createProductCard(product) {
+            const badges = [];
+            if (product.sale) badges.push('<span class="badge sale">SALE</span>');
+            if (product.new) badges.push('<span class="badge new">NEW</span>');
+            if (product.proPlayer) badges.push('<span class="badge pro">PRO</span>');
+            
+            const price = product.sale 
+                ? `<div class="product-price sale">$${product.salePrice} <span class="original-price">$${product.price}</span></div>`
+                : `<div class="product-price">$${product.price}</div>`;
+            
+            return `
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="product-image">${product.image}</div>
+                            <div class="product-front-info">
+                                <div>${badges.join('')}</div>
+                                <div class="product-title">${product.name}</div>
+                                <div class="product-brand">${product.brand}</div>
+                                ${price}
+                                <div class="product-rating">⭐ ${product.rating}/5</div>
+                            </div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="product-back-content">
+                                <div>
+                                    <div class="product-title">${product.name}</div>
+                                    <div class="product-description">
+                                        <p><strong>Description:</strong></p>
+                                        <p>${product.description || 'High-quality gaming equipment designed for professional players and enthusiasts.'}</p>
+                                        <p><strong>Brand:</strong> ${product.brand}</p>
+                                        <p><strong>Rating:</strong> ⭐ ${product.rating}/5</p>
+                                        ${price}
+                                    </div>
+                                </div>
+                                <div class="product-actions">
+                                    <button class="add-to-cart" onclick="addToCart(${product.id})">Add to Cart 🛒</button>
+                                    <button class="add-to-wishlist" onclick="addToWishlist(${product.id})">Add to Wishlist ❤️</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({...product, quantity: 1});
+            }
+            
+            saveData();
+            updateCounts();
+            alert('Added to cart!');
+        }
+
+        function addToWishlist(productId) {
+            if (!wishlist.includes(productId)) {
+                wishlist.push(productId);
+                saveData();
+                updateCounts();
+                alert('Added to wishlist!');
+            } else {
+                alert('Already in wishlist!');
+            }
+        }
+
+        function updateCounts() {
+            document.getElementById('cartCount').textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('wishlistCount').textContent = wishlist.length;
+        }
+
+        function displayCart() {
+            const container = document.getElementById('cartItems');
+            const totalContainer = document.getElementById('cartTotal');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            
+            if (cart.length === 0) {
+                container.innerHTML = '<p>Your cart is empty</p>';
+                totalContainer.innerHTML = '';
+                checkoutBtn.style.display = 'none';
+                return;
+            }
+            
+            container.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <div class="cart-item-image">${item.image}</div>
+                    <div class="cart-item-info">
+                        <h3>${item.name}</h3>
+                        <p>$${item.sale ? item.salePrice : item.price} x ${item.quantity}</p>
+                        <div class="cart-item-actions">
+                            <button onclick="updateQuantity(${item.id}, -1)">-</button>
+                            <span style="padding: 0 1rem;">${item.quantity}</span>
+                            <button onclick="updateQuantity(${item.id}, 1)">+</button>
+                            <button onclick="removeFromCart(${item.id})" style="background: var(--danger-color); color: white; margin-left: 1rem;">Remove</button>
+                        </div>
+                    </div>
+                    <div style="font-weight: bold; font-size: 1.2rem;">$${((item.sale ? item.salePrice : item.price) * item.quantity).toFixed(2)}</div>
+                </div>
+            `).join('');
+            
+            const total = cart.reduce((sum, item) => sum + (item.sale ? item.salePrice : item.price) * item.quantity, 0);
+            totalContainer.innerHTML = `Total: $${total.toFixed(2)}`;
+            checkoutBtn.style.display = 'block';
+        }
+
+        function updateQuantity(productId, change) {
+            const item = cart.find(i => i.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    saveData();
+                    displayCart();
+                    updateCounts();
+                }
+            }
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            saveData();
+            displayCart();
+            updateCounts();
+        }
+
+        function displayWishlist() {
+            const container = document.getElementById('wishlistItems');
+            const wishlistProducts = products.filter(p => wishlist.includes(p.id));
+            
+            if (wishlistProducts.length === 0) {
+                container.innerHTML = '<p>Your wishlist is empty</p>';
+                return;
+            }
+            
+            container.innerHTML = wishlistProducts.map(p => createProductCard(p)).join('');
+        }
+
+        function displayCheckout() {
+            const summaryContainer = document.getElementById('checkoutSummary');
+            const total = cart.reduce((sum, item) => sum + (item.sale ? item.salePrice : item.price) * item.quantity, 0);
+            
+            summaryContainer.innerHTML = `
+                ${cart.map(item => `
+                    <div class="order-item">
+                        <span>${item.name} x${item.quantity}</span>
+                        <span>$${((item.sale ? item.salePrice : item.price) * item.quantity).toFixed(2)}</span>
+                    </div>
+                `).join('')}
+                <hr style="margin: 1rem 0;">
+                <div class="order-item" style="font-weight: bold; font-size: 1.2rem;">
+                    <span>Total:</span>
+                    <span>$${total.toFixed(2)}</span>
+                </div>
+            `;
+        }
+
+        function placeOrder(e) {
+            e.preventDefault();
+            
+            if (!currentUser) {
+                alert('Please login to place an order');
+                showPage('login');
+                return;
+            }
+            
+            const address = document.getElementById('address').value;
+            const paymentMethod = document.getElementById('paymentMethod').value;
+            const total = cart.reduce((sum, item) => sum + (item.sale ? item.salePrice : item.price) * item.quantity, 0);
+            
+            const order = {
+                id: Date.now(),
+                user: currentUser.email,
+                items: [...cart],
+                total: total,
+                address: address,
+                paymentMethod: paymentMethod,
+                date: new Date().toLocaleDateString(),
+                status: 'Processing'
+            };
+            
+            orders.push(order);
+            cart = [];
+            saveData();
+            updateCounts();
+            
+            alert('Order placed successfully! Estimated delivery: 3-5 business days');
+            showPage('orderHistory');
+        }
+
+        function displayOrderHistory() {
+            const container = document.getElementById('orderList');
+            
+            if (!currentUser) {
+                container.innerHTML = '<p>Please login to view order history</p>';
+                return;
+            }
+            
+            const userOrders = orders.filter(o => o.user === currentUser.email);
+            
+            if (userOrders.length === 0) {
+                container.innerHTML = '<p>No orders yet</p>';
+                return;
+            }
+            
+            container.innerHTML = userOrders.map(order => `
+                <div class="order-card">
+                    <div class="order-header">
+                        <h3>Order #${order.id}</h3>
+                        <span class="order-status">${order.status}</span>
+                    </div>
+                    <p>Date: ${order.date}</p>
+                    <p>Total: $${order.total.toFixed(2)}</p>
+                    <p>Payment: ${order.paymentMethod}</p>
+                    <p>Address: ${order.address}</p>
+                    <div style="margin-top: 1rem;">
+                        <button onclick="cancelOrder(${order.id})" style="background: var(--danger-color); color: white;">Cancel Order</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function cancelOrder(orderId) {
+            if (confirm('Are you sure you want to cancel this order?')) {
+                orders = orders.filter(o => o.id !== orderId);
+                saveData();
+                displayOrderHistory();
+                alert('Order cancelled successfully');
+            }
+        }
+
+        async function login(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            const result = await apiCall('login', { email, password }, 'POST');
+            
+            if (result.success) {
+                currentUser = result.user;
+                isAdmin = currentUser.role === 'admin';
+                
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                document.getElementById('loginBtn').style.display = 'none';
+                document.getElementById('logoutBtn').style.display = 'block';
+                
+                if (isAdmin) {
+                    document.getElementById('adminBtn').style.display = 'block';
+                }
+                
+                alert('Login successful!');
+                showPage('home');
+            } else {
+                alert(result.message || 'Invalid email or password');
+            }
+        }
+
+        async function register(e) {
+            e.preventDefault();
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const password = document.getElementById('regPassword').value;
+            
+            const result = await apiCall('register', { name, email, password }, 'POST');
+            
+            if (result.success) {
+                alert('Registration successful! Please login.');
+                showPage('login');
+            } else {
+                alert(result.message || 'Registration failed');
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            isAdmin = false;
+            localStorage.removeItem('currentUser');
+            document.getElementById('loginBtn').style.display = 'block';
+            document.getElementById('logoutBtn').style.display = 'none';
+            document.getElementById('adminBtn').style.display = 'none';
+            showPage('home');
+            alert('Logged out successfully');
+        }
+
+        function filterByCategory(category) {
+            const filtered = products.filter(p => p.category === category);
+            showPage('products');
+            displayProducts(filtered);
+        }
+
+        function applyFilters() {
+            const category = document.getElementById('categoryFilter').value;
+            const brand = document.getElementById('brandFilter').value;
+            const proPlayer = document.getElementById('proPlayerFilter').checked;
+            
+            let filtered = products;
+            
+            if (category) filtered = filtered.filter(p => p.category === category);
+            if (brand) filtered = filtered.filter(p => p.brand === brand);
+            if (proPlayer) filtered = filtered.filter(p => p.proPlayer);
+            
+            displayProducts(filtered);
+        }
+
+        function searchProducts() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            if (!query) {
+                displayProducts();
+                return;
+            }
+            
+            const filtered = products.filter(p => 
+                p.name.toLowerCase().includes(query) || 
+                p.brand.toLowerCase().includes(query) ||
+                p.category.toLowerCase().includes(query)
+            );
+            showPage('products');
+            displayProducts(filtered);
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            document.querySelector('.theme-toggle').textContent = isDark ? '☀️' : '🌙';
+        }
+
+        function toggleLanguage() {
+            language = language === 'en' ? 'mn' : 'en';
+            document.getElementById('langBtn').textContent = language === 'en' ? 'MN' : 'EN';
+            
+            if (language === 'mn') {
+                alert('Монгол хэл рүү шилжлээ');
+            } else {
+                alert('Switched to English');
+            }
+        }
+
+        function showAddProductForm() {
+            if (!isAdmin) {
+                alert('Admin access required');
+                return;
+            }
+            
+            document.getElementById('adminContent').innerHTML = `
+                <div style="max-width: 600px; margin: 2rem auto; padding: 2rem; background: var(--card-bg); border-radius: 10px;">
+                    <h3>Add New Product</h3>
+                    <form onsubmit="addProduct(event)">
+                        <div class="form-group">
+                            <label>Product Name</label>
+                            <input type="text" id="newProductName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select id="newProductCategory" required>
+                                <option value="mouse">Mouse</option>
+                                <option value="keyboard">Keyboard</option>
+                                <option value="headset">Headset</option>
+                                <option value="pad">Mouse Pad</option>
+                                <option value="keycaps">Keycaps</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Brand</label>
+                            <input type="text" id="newProductBrand" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Price ($)</label>
+                            <input type="number" id="newProductPrice" required min="0" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea id="newProductDescription" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Image Emoji</label>
+                            <input type="text" id="newProductImage" value="🎮" required>
+                        </div>
+                        <div class="form-group">
+                            <label><input type="checkbox" id="newProductProPlayer"> Pro Player Gear</label>
+                        </div>
+                        <button type="submit" style="background: var(--secondary-color); color: white; width: 100%; padding: 1rem;">Add Product</button>
+                    </form>
+                </div>
+            `;
+        }
+
+        async function addProduct(e) {
+            e.preventDefault();
+            
+            if (!isAdmin) {
+                alert('Admin access required');
+                return;
+            }
+            
+            const newProduct = {
+                name: document.getElementById('newProductName').value,
+                category: document.getElementById('newProductCategory').value,
+                brand: document.getElementById('newProductBrand').value,
+                price: parseFloat(document.getElementById('newProductPrice').value),
+                description: document.getElementById('newProductDescription').value,
+                image: document.getElementById('newProductImage').value,
+                proPlayer: document.getElementById('newProductProPlayer').checked
+            };
+            
+            const result = await apiCall('addProduct', newProduct, 'POST');
+            
+            if (result.success) {
+                alert('Product added successfully!');
+                await loadProducts(); // Reload products from JSON
+                displayProducts();
+                showProductManagement();
+            } else {
+                alert('Failed to add product');
+            }
+        }
+
+        function showProductManagement() {
+            if (!isAdmin) {
+                alert('Admin access required');
+                return;
+            }
+            
+            document.getElementById('adminContent').innerHTML = `
+                <div style="margin-top: 2rem;">
+                    <h3>Manage Products</h3>
+                    ${products.map(p => `
+                        <div class="product-management-item">
+                            <div>
+                                <strong>${p.name}</strong> - $${p.price} - ${p.brand} - ${p.category}
+                            </div>
+                            <button onclick="deleteProduct(${p.id})" style="background: var(--danger-color); color: white;">Delete</button>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        async function deleteProduct(productId) {
+            if (!isAdmin) {
+                alert('Admin access required');
+                return;
+            }
+            
+            if (confirm('Are you sure you want to delete this product?')) {
+                const result = await apiCall('deleteProduct', { id: productId }, 'POST');
+                
+                if (result.success) {
+                    await loadProducts(); // Reload products from JSON
+                    showProductManagement();
+                    alert('Product deleted successfully');
+                } else {
+                    alert('Failed to delete product');
+                }
+            }
+        }
+
+        function showPolicy(type) {
+            const policies = {
+                return: 'Return Policy: You can return products within 30 days of purchase for a full refund. Product must be in original condition.',
+                privacy: 'Privacy Policy: We protect your personal information and never share it with third parties without your consent.'
+            };
+            alert(policies[type]);
+        }
+
+        // Allow Enter key to search
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('searchInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    searchProducts();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
