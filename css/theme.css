@@ -1,0 +1,344 @@
+/* ==========================================
+   THEME.CSS - Dark/Light Mode
+   ========================================== */
+
+/* Dark Mode Variables */
+/* Dark Mode Variables */
+body.dark-mode {
+    /* Colors - Dark Mode - Minimal & Professional */
+    /* Primary: White for main actions in dark mode */
+    --color-primary: #ffffff;
+    --color-primary-dark: #e5e5e5;
+    --color-primary-light: #f5f5f5;
+
+    /* Accent: Subtle gray for minimal highlights */
+    --color-accent: #a0a0a0;
+    --color-accent-light: #b0b0b0;
+
+    /* Background Colors - Deep, rich darks */
+    --color-bg: #0b0b0b;
+    --color-bg-secondary: #121212;
+    --color-bg-tertiary: #1a1a1a;
+    --color-surface: #141414;
+    --color-surface-hover: #1a1a1a;
+
+    /* Borders - Very subtle */
+    --color-border: rgba(255, 255, 255, 0.08);
+    --color-border-light: rgba(255, 255, 255, 0.05);
+
+    /* Text Colors - White and soft grays */
+    --color-text: #ffffff;
+    --color-text-secondary: #a0a0a0;
+    --color-text-tertiary: #707070;
+    --color-text-inverse: #000000;
+
+    /* Shadows - REMOVED for premium flat look */
+    --shadow-sm: none;
+    --shadow-md: none;
+    --shadow-lg: none;
+    --shadow-xl: none;
+    --shadow-2xl: none;
+}
+
+/* Dark Mode Navbar */
+body.dark-mode .navbar {
+    background: rgba(11, 11, 11, 0.95);
+    border-bottom: 1px solid var(--color-border);
+}
+
+body.dark-mode .navbar-top {
+    background: transparent;
+    border-bottom: 1px solid var(--color-border);
+}
+
+body.dark-mode .navbar-bottom {
+    background: var(--color-bg-secondary);
+}
+
+/* Dark Mode Theme Toggle Icons */
+body.dark-mode .sun-icon {
+    opacity: 0;
+}
+
+body.dark-mode .moon-icon {
+    opacity: 1;
+}
+
+/* Dark Mode Hero - Premium Gradient & Fixes */
+body.dark-mode .hero {
+    /* Premium Gradient: #0b0b0b → #121212 → #1a1a1a */
+    background: linear-gradient(135deg, #0b0b0b 0%, #121212 50%, #1a1a1a 100%);
+    border: 1px solid var(--color-border);
+    box-shadow: none;
+}
+
+body.dark-mode .hero h1 {
+    color: #ffffff;
+    text-shadow: none;
+}
+
+body.dark-mode .hero p {
+    color: #a0a0a0;
+    /* Muted gray */
+}
+
+/* Dark Mode Product Cards - Minimal & Clean */
+body.dark-mode .product-card {
+    background: #121212;
+    /* Dark gray, not pure black */
+    border: 1px solid var(--color-border);
+    box-shadow: none;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+body.dark-mode .product-card:hover {
+    transform: none;
+    /* No scale */
+    box-shadow: none;
+    /* No glow */
+    border-color: rgba(255, 255, 255, 0.2);
+    background: #181818;
+}
+
+body.dark-mode .product-image-container {
+    background: #1a1a1a;
+    border-bottom: 1px solid var(--color-border);
+}
+
+/* Dark Mode Price Emphasis */
+body.dark-mode .product-price {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+/* Dark Mode Buttons - Flat & Premium */
+body.dark-mode .btn-primary,
+body.dark-mode .add-to-cart-btn {
+    background: #ffffff;
+    color: #000000;
+    border: none;
+    box-shadow: none;
+    transition: background-color 0.2s ease;
+}
+
+body.dark-mode .btn-primary:hover,
+body.dark-mode .add-to-cart-btn:hover {
+    background: #e0e0e0;
+    transform: none;
+    box-shadow: none;
+}
+
+body.dark-mode .btn-secondary {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    box-shadow: none;
+}
+
+body.dark-mode .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.05);
+    /* Slight tint */
+    border-color: #ffffff;
+    transform: none;
+    box-shadow: none;
+}
+
+body.dark-mode .qty-btn:hover {
+    background: #ffffff;
+    color: #000000;
+}
+
+body.dark-mode .cart-item-remove:hover {
+    transform: none;
+}
+
+body.dark-mode .btn-outline {
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+}
+
+body.dark-mode .btn-outline:hover {
+    background: #ffffff;
+    color: #000000;
+    border-color: #ffffff;
+}
+
+/* Dark Mode Forms */
+body.dark-mode .form-group input,
+body.dark-mode .form-group textarea,
+body.dark-mode .form-group select,
+body.dark-mode .qty-input,
+body.dark-mode .qty-btn {
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+}
+
+body.dark-mode .form-group input:focus,
+body.dark-mode .form-group textarea:focus,
+body.dark-mode .form-group select:focus {
+    border-color: #ffffff;
+    box-shadow: none;
+}
+
+body.dark-mode .search-input {
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+}
+
+body.dark-mode .search-input:focus {
+    border-color: #ffffff;
+    box-shadow: none;
+}
+
+/* Dark Mode Modal */
+body.dark-mode .modal {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+}
+
+body.dark-mode .modal-content {
+    background: #141414;
+    border: 1px solid var(--color-border);
+    box-shadow: none;
+}
+
+/* Dark Mode Footer */
+body.dark-mode .footer {
+    background: #000000;
+    border-top: 1px solid var(--color-border);
+}
+
+/* Dark Mode Scrollbar */
+body.dark-mode ::-webkit-scrollbar-track {
+    background: var(--color-bg-secondary);
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 99px;
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Smooth Theme Transition */
+body {
+    transition: background-color var(--transition-slow), color var(--transition-slow);
+}
+
+.navbar,
+.product-card,
+.modal-content,
+.sidebar,
+.cart-item,
+.form-group input,
+.form-group textarea,
+.form-group select,
+.search-input {
+    transition: background-color var(--transition-slow), border-color var(--transition-slow), color var(--transition-slow);
+}
+
+/* Dark Mode Empty State */
+body.dark-mode .empty-state-icon {
+    opacity: 0.2;
+}
+
+/* Dark Mode Selection */
+body.dark-mode ::selection {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+/* Dark Mode Icon Buttons */
+body.dark-mode .icon-btn {
+    background: transparent;
+    color: var(--color-text);
+    border: 1px solid transparent;
+}
+
+body.dark-mode .icon-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Dark Mode Wishlist Button on Product Cards */
+body.dark-mode .wishlist-btn {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--color-text);
+}
+
+body.dark-mode .wishlist-btn:hover,
+body.dark-mode .wishlist-btn.active {
+    background: #ffffff;
+    color: #000000;
+    transform: none;
+}
+
+/* Dark Mode Search Results */
+body.dark-mode .search-results {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    box-shadow: none;
+}
+
+body.dark-mode .search-result-item {
+    border-bottom-color: var(--color-border);
+}
+
+body.dark-mode .search-result-item:hover {
+    background: var(--color-bg-tertiary);
+}
+
+/* Dark Mode Filter Sidebar */
+body.dark-mode .sidebar {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    box-shadow: none;
+}
+
+body.dark-mode .filter-option:hover {
+    background: var(--color-bg-tertiary);
+}
+
+/* Dark Mode Section Titles */
+body.dark-mode .section-title {
+    background: none;
+    -webkit-text-fill-color: #ffffff;
+    color: #ffffff;
+}
+
+/* Dark Mode Tags */
+body.dark-mode .product-tag {
+    box-shadow: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Accessibility - Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+    :root {
+        --color-border: #000000;
+        --shadow-md: 0 0 0 2px currentColor;
+    }
+
+    body.dark-mode {
+        --color-border: #ffffff;
+    }
+}

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ProGear - Premium Gaming Equipment</title>
+    <title>Product Details - ProGear</title>
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/cart-checkout.css">
+    <link rel="stylesheet" href="css/product-detail.css">
     <link rel="stylesheet" href="css/theme.css">
 </head>
 
@@ -24,7 +25,7 @@
         <div class="navbar-top">
             <div class="container navbar-top-container">
                 <div class="navbar-brand">
-                    <a href="#/" class="logo">ProGear</a>
+                    <a href="index.html#/" class="logo">ProGear</a>
                 </div>
 
                 <!-- Search Bar -->
@@ -45,19 +46,19 @@
                     </button>
 
                     <!-- Wishlist -->
-                    <a href="#/wishlist" class="icon-btn user-only" id="wishlistBtn" title="Wishlist">
+                    <a href="index.html#/wishlist" class="icon-btn user-only" id="wishlistBtn" title="Wishlist">
                         <i class="far fa-heart"></i>
                         <span class="badge" id="wishlistBadge">0</span>
                     </a>
 
                     <!-- Cart -->
-                    <a href="#/cart" class="icon-btn user-only" id="cartBtn" title="Cart">
+                    <a href="index.html#/cart" class="icon-btn user-only" id="cartBtn" title="Cart">
                         <i class="fas fa-shopping-cart"></i>
                         <span class="badge" id="cartBadge">0</span>
                     </a>
 
                     <!-- Settings -->
-                    <a href="#/settings" class="icon-btn user-only" title="Settings">
+                    <a href="index.html#/settings" class="icon-btn user-only" title="Settings">
                         <i class="fas fa-cog" style="font-size: 20px;"></i>
                     </a>
 
@@ -66,7 +67,7 @@
                     <button class="btn btn-secondary user-only" id="logoutBtn" data-i18n="logout">Logout</button>
 
                     <!-- Admin Dashboard -->
-                    <a href="#/admin" class="btn btn-accent admin-only" data-i18n="admin">Admin</a>
+                    <a href="index.html#/admin" class="btn btn-accent admin-only" data-i18n="admin">Admin</a>
 
                     <!-- Mobile Menu Toggle -->
                     <button class="mobile-menu-toggle" id="mobileMenuToggle">
@@ -82,21 +83,22 @@
         <div class="navbar-bottom">
             <div class="container navbar-bottom-container">
                 <ul class="nav-links" id="navLinks">
-                    <li><a href="#/" class="nav-link" data-i18n="home">Home</a></li>
-                    <li><a href="#/products" class="nav-link" data-i18n="products">Products</a></li>
-                    <!-- <li><a href="#/categories" class="nav-link" data-i18n="categories">Categories</a></li> -->
-                    <li><a href="#/sale" class="nav-link" data-i18n="sale">Sale</a></li>
-                    <li class="admin-only"><a href="#/winter-sale" class="nav-link" data-i18n="winterSale">Winter
-                            Sale</a></li>
-                    <!-- <li><a href="#/brands" class="nav-link" data-i18n="brands">Brands</a></li> -->
-                    <li class="user-only"><a href="#/orders" class="nav-link" data-i18n="orders">Orders</a></li>
+                    <li><a href="index.html#/" class="nav-link" data-i18n="home">Home</a></li>
+                    <li><a href="index.html#/products" class="nav-link" data-i18n="products">Products</a></li>
+                    <li><a href="index.html#/sale" class="nav-link" data-i18n="sale">Sale</a></li>
+                    <li class="admin-only"><a href="index.html#/winter-sale" class="nav-link"
+                            data-i18n="winterSale">Winter Sale</a></li>
+                    <li class="user-only"><a href="index.html#/orders" class="nav-link" data-i18n="orders">Orders</a>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- Main App Container -->
-    <main id="app" class="main-content"></main>
+    <!-- Main Content -->
+    <main id="product-detail-container" class="main-content">
+        <!-- Content will be injected here by js/product-page.js -->
+    </main>
 
     <!-- Footer -->
     <footer class="footer">
@@ -122,20 +124,20 @@
                 <div class="footer-section">
                     <h4 data-i18n="quickLinks">Quick Links</h4>
                     <ul class="footer-links">
-                        <li><a href="#/products" data-i18n="products">Products</a></li>
-                        <li><a href="#/categories" data-i18n="categories">Categories</a></li>
-                        <li><a href="#/brands" data-i18n="brands">Brands</a></li>
-                        <li><a href="#/sale" data-i18n="sale">Sale</a></li>
+                        <li><a href="index.html#/products" data-i18n="products">Products</a></li>
+                        <li><a href="index.html#/categories" data-i18n="categories">Categories</a></li>
+                        <li><a href="index.html#/brands" data-i18n="brands">Brands</a></li>
+                        <li><a href="index.html#/sale" data-i18n="sale">Sale</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-section">
                     <h4 data-i18n="support">Support</h4>
                     <ul class="footer-links">
-                        <li><a href="#/contact" data-i18n="contactUs">Contact Us</a></li>
-                        <li><a href="#/shipping" data-i18n="shippingInfo">Shipping Info</a></li>
-                        <li><a href="#/returns" data-i18n="returnsPolicy">Returns Policy</a></li>
-                        <li><a href="#/faq" data-i18n="faq">FAQ</a></li>
+                        <li><a href="index.html#/contact" data-i18n="contactUs">Contact Us</a></li>
+                        <li><a href="index.html#/shipping" data-i18n="shippingInfo">Shipping Info</a></li>
+                        <li><a href="index.html#/returns" data-i18n="returnsPolicy">Returns Policy</a></li>
+                        <li><a href="index.html#/faq" data-i18n="faq">FAQ</a></li>
                     </ul>
                 </div>
 
@@ -152,8 +154,8 @@
             <div class="footer-bottom">
                 <p>&copy; 2025 ProGear. <span data-i18n="allRightsReserved">All rights reserved.</span></p>
                 <div class="footer-legal">
-                    <a href="#/privacy" data-i18n="privacyPolicy">Privacy Policy</a>
-                    <a href="#/terms" data-i18n="termsOfService">Terms of Service</a>
+                    <a href="index.html#/privacy" data-i18n="privacyPolicy">Privacy Policy</a>
+                    <a href="index.html#/terms" data-i18n="termsOfService">Terms of Service</a>
                 </div>
             </div>
         </div>
@@ -240,7 +242,8 @@
     <script src="js/wishlist.js"></script>
     <script src="js/orders.js"></script>
     <script src="js/admin.js"></script>
-    <script src="js/app.js"></script>
+    <!-- NOTE: app.js is removed, replaced by specific page logic -->
+    <script src="js/product-page.js"></script>
 </body>
 
 </html>
